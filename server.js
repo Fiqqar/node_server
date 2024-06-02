@@ -1,11 +1,12 @@
-const http = require('http');
-const server = http.createServer((req, res) => {
-    res.writeHead(200, {'Content-Type': "text/html"});
-    res.write('<h1>Hello, world!</h1>');
-    res.end();
-});
-
-const port = 8080;
-server.listen(port, () => {
-    console.log('server running on port ' + port);
-});
+const express = require('express');
+const server = express();
+const cors = require('cors');
+const usersRoute = require('./routes/users');
+server.use('/users', usersRoute);
+const productsRoute = require('./routes/products');
+server.use('/products', productsRoute);
+var corsOptions = {
+    origin : 'http://localhost:8080'
+};
+server.use(cors(corsOptions));
+server.use(express.json());
